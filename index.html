@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vadim Sandru | Junior Web Developer</title>
+    <meta name="description" content="Portfolio di Vadim Sandru — Junior Web Developer. Java, Python, Web Dev.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg:           #07070d;
+            --surface:      rgba(255,255,255,0.032);
+            --surface-h:    rgba(255,255,255,0.055);
+            --border:       rgba(255,255,255,0.07);
+            --border-h:     rgba(255,255,255,0.16);
+            --text:         #f0f0f5;
+            --muted:        rgba(240,240,245,0.42);
+            --accent:       #7c6aff;
+            --accent-dim:   rgba(124,106,255,0.12);
+            --font-display: 'Syne', sans-serif;
+            --font-body:    'Inter', sans-serif;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--font-body);
+            font-weight: 400;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        /* Cursore custom */
+        .cursor {
+            position: fixed;
+            width: 8px; height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width .2s, height .2s, opacity .2s;
+        }
+        .cursor.big {
+            width: 36px; height: 36px;
+            background: transparent;
+            border: 1px solid rgba(124,106,255,0.5);
+        }
+
+        #bg {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        main {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* NAV */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 48px;
+            pointer-events: none;
+        }
+
+        .nav-logo {
+            font-family: var(--font-display);
+            font-weight: 800;
+            font-size: 1rem;
+            letter-spacing: -0.02em;
+            color: var(--text);
+            opacity: 0.6;
+            pointer-events: all;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            pointer-events: all;
+        }
+
+        .nav-links a {
+            font-size: 0.78rem;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--muted);
+            text-decoration: none;
+            transition: color .25s;
+        }
+
+        .nav-links a:hover { color: var(--text); }
+
+        /* SECTIONS */
+        section {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        /* HERO */
+        #hero {
+            min-height: 100svh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            max-width: 960px;
+        }
+
+        .hero-label {
+            font-size: 0.72rem;
+            font-weight: 500;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 32px;
+            opacity: 0.85;
+        }
+
+        #hero h1 {
+            font-family: var(--font-display);
+            font-size: clamp(4rem, 11vw, 9rem);
+            font-weight: 800;
+            line-height: 0.92;
+            letter-spacing: -0.04em;
+            color: var(--text);
+        }
+
+        .hero-line {
+            width: 48px;
+            height: 2px;
+            background: var(--accent);
+            margin: 32px 0 28px;
+            border-radius: 2px;
+        }
+
+        .hero-sub {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .hero-role {
+            font-family: var(--font-display);
+            font-size: clamp(1rem, 2.2vw, 1.25rem);
+            font-weight: 400;
+            color: var(--muted);
+            letter-spacing: 0.01em;
+        }
+
+        .hero-dot {
+            width: 4px; height: 4px;
+            border-radius: 50%;
+            background: var(--accent);
+            opacity: 0.4;
+            flex-shrink: 0;
+        }
+
+        .hero-tagline {
+            font-size: 0.88rem;
+            color: rgba(240,240,245,0.25);
+            font-style: italic;
+            font-weight: 300;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 16px;
+            margin-top: 48px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: var(--font-body);
+            font-size: 0.82rem;
+            font-weight: 500;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            text-decoration: none;
+            padding: 14px 26px;
+            border-radius: 100px;
+            transition: all .3s ease;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: #fff;
+            border: 1px solid var(--accent);
+        }
+
+        .btn-primary:hover {
+            background: transparent;
+            color: var(--accent);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--muted);
+            border: 1px solid var(--border-h);
+        }
+
+        .btn-ghost:hover {
+            color: var(--text);
+            border-color: rgba(255,255,255,0.3);
+        }
+
+        /* ABOUT */
+        #about {
+            padding-top: 130px;
+        }
+
+        .section-eyebrow {
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 20px;
+            opacity: 0.8;
+        }
+
+        h2 {
+            font-family: var(--font-display);
+            font-size: clamp(1.8rem, 4vw, 2.6rem);
+            font-weight: 700;
+            letter-spacing: -0.025em;
+            color: var(--text);
+            margin-bottom: 20px;
+            line-height: 1.1;
+        }
+
+        .about-body {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            margin-top: 40px;
+            align-items: start;
+        }
+
+        .about-text p {
+            font-size: 1.05rem;
+            color: var(--muted);
+            line-height: 1.8;
+            margin-bottom: 16px;
+        }
+
+        .about-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2px;
+        }
+
+        .stat {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 24px 20px;
+            border-radius: 4px;
+        }
+
+        .stat:first-child { border-radius: 12px 4px 4px 4px; }
+        .stat:nth-child(2) { border-radius: 4px 12px 4px 4px; }
+        .stat:nth-child(3) { border-radius: 4px 4px 4px 12px; }
+        .stat:last-child { border-radius: 4px 4px 12px 4px; }
+
+        .stat-number {
+            font-family: var(--font-display);
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            color: var(--text);
+            line-height: 1;
+            margin-bottom: 6px;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--muted);
+            font-weight: 400;
+            letter-spacing: 0.04em;
+        }
+
+        /* PROGETTI */
+        #progetti {
+            padding-top: 130px;
+        }
+
+        .progetti-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-top: 40px;
+        }
+
+        .card {
+            display: flex;
+            flex-direction: column;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 28px 24px 24px;
+            text-decoration: none;
+            color: inherit;
+            outline: none;
+            transition:
+                transform .35s cubic-bezier(.2,.8,.2,1),
+                border-color .35s ease,
+                background .35s ease,
+                box-shadow .35s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            border-color: var(--border-h);
+            background: var(--surface-h);
+            box-shadow: 0 24px 50px rgba(0,0,0,0.6),
+                        0 0 0 1px var(--accent-dim) inset;
+        }
+
+        .card:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 3px;
+        }
+
+        .card-eyebrow {
+            font-size: 0.64rem;
+            font-weight: 500;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 12px;
+            opacity: 0.8;
+        }
+
+        .card h3 {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            color: var(--text);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .arrow {
+            opacity: 0.2;
+            font-size: 0.8em;
+            transition: opacity .3s, transform .3s;
+            display: inline-block;
+        }
+
+        .card:hover .arrow {
+            opacity: 0.7;
+            transform: translate(2px,-2px);
+        }
+
+        .card p {
+            font-size: 0.85rem;
+            color: var(--muted);
+            line-height: 1.65;
+            flex: 1;
+        }
+
+        .card-tags {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-top: 18px;
+        }
+
+        .tag {
+            font-size: 0.65rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--muted);
+            background: rgba(255,255,255,0.04);
+            border: 1px solid var(--border);
+            padding: 4px 10px;
+            border-radius: 100px;
+        }
+
+        /* Card in arrivo */
+        .card.coming-soon {
+            opacity: 0.45;
+            cursor: default;
+            pointer-events: none;
+        }
+
+        .card-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.6rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--accent);
+            background: var(--accent-dim);
+            border: 1px solid rgba(124,106,255,0.25);
+            padding: 3px 10px;
+            border-radius: 100px;
+            margin-bottom: 14px;
+            width: fit-content;
+        }
+
+        /* SKILLS */
+        #skills {
+            padding-top: 130px;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2px;
+            margin-top: 40px;
+        }
+
+        .skill-item {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 28px 28px;
+            transition: background .3s, border-color .3s;
+        }
+
+        .skill-item:hover {
+            background: var(--surface-h);
+            border-color: var(--border-h);
+        }
+
+        .skill-item:nth-child(1) { border-radius: 12px 4px 4px 4px; }
+        .skill-item:nth-child(2) { border-radius: 4px 12px 4px 4px; }
+        .skill-item:nth-child(3) { border-radius: 4px 4px 4px 12px; }
+        .skill-item:nth-child(4) { border-radius: 4px 4px 12px 4px; }
+
+        .skill-name {
+            font-family: var(--font-display);
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text);
+            margin-bottom: 10px;
+        }
+
+        .skill-desc {
+            font-size: 0.88rem;
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        /* CONTATTI */
+        #contact {
+            padding-top: 130px;
+            padding-bottom: 140px;
+            text-align: center;
+        }
+
+        #contact h2 {
+            font-size: clamp(2rem, 6vw, 4.5rem);
+            letter-spacing: -0.04em;
+            line-height: 1;
+            margin-bottom: 20px;
+        }
+
+        #contact .sub {
+            font-size: 1rem;
+            color: var(--muted);
+            margin-bottom: 48px;
+            max-width: 420px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.7;
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        /* FOOTER */
+        footer {
+            position: relative;
+            z-index: 1;
+            border-top: 1px solid var(--border);
+            padding: 28px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 960px;
+            margin: 0 auto;
+        }
+
+        footer p {
+            font-size: 0.75rem;
+            color: rgba(240,240,245,0.2);
+            letter-spacing: 0.04em;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-links a {
+            font-size: 0.75rem;
+            color: rgba(240,240,245,0.2);
+            text-decoration: none;
+            transition: color .25s;
+            letter-spacing: 0.04em;
+        }
+
+        .footer-links a:hover { color: var(--muted); }
+
+        /* SCROLL REVEAL */
+        .hidden {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity .85s ease-out, transform .85s ease-out;
+        }
+        .show { opacity: 1; transform: none; }
+
+        /* RESPONSIVE */
+        @media (max-width: 820px) {
+            nav { padding: 20px 24px; }
+            .nav-links { display: none; }
+            section { padding: 0 24px; }
+            .about-body { grid-template-columns: 1fr; gap: 36px; }
+            .progetti-grid { grid-template-columns: 1fr; }
+            .skills-grid { grid-template-columns: 1fr; }
+            .skill-item:nth-child(n) { border-radius: 12px; }
+            footer { flex-direction: column; gap: 12px; text-align: center; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .hidden, .card, .btn { transition: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="cursor" id="cursor"></div>
+    <canvas id="bg"></canvas>
+
+    <nav>
+        <a class="nav-logo" href="#hero">VS</a>
+        <div class="nav-links">
+            <a href="#about">Chi sono</a>
+            <a href="#progetti">Progetti</a>
+            <a href="#skills">Skills</a>
+            <a href="#contact">Contatti</a>
+        </div>
+    </nav>
+
+    <main>
+
+        <!-- HERO -->
+        <section id="hero" class="hidden">
+            <p class="hero-label">Junior Web Developer</p>
+            <h1>Vadim<br>Sandru</h1>
+            <div class="hero-line"></div>
+            <div class="hero-sub">
+                <p class="hero-role">Java · Python · Web Dev</p>
+                <div class="hero-dot"></div>
+                <p class="hero-tagline">Disponibile per nuove opportunità</p>
+            </div>
+            <div class="hero-cta">
+                <a href="#progetti" class="btn btn-primary">Vedi i progetti</a>
+                <a href="#contact" class="btn btn-ghost">Contattami</a>
+            </div>
+        </section>
+
+        <!-- CHI SONO -->
+        <section id="about" class="hidden">
+            <p class="section-eyebrow">Chi sono</p>
+            <h2>Codice pulito,<br>soluzioni concrete.</h2>
+            <div class="about-body">
+                <div class="about-text">
+                    <p>Appassionato di tecnologia e sviluppo web. Lavoro con Java, Python e le tecnologie front-end per costruire applicazioni funzionali e ben strutturate.</p>
+                    <p>Multilingue (IT, EN, RO, FR) e con una solida base in system administration Linux — porto un punto di vista full-stack anche nei progetti web.</p>
+                </div>
+                <div class="about-stats">
+                    <div class="stat">
+                        <div class="stat-number">1</div>
+                        <div class="stat-label">Progetto live</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">4</div>
+                        <div class="stat-label">Lingue parlate</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">Java</div>
+                        <div class="stat-label">Spring Boot</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">Linux</div>
+                        <div class="stat-label">Sysadmin base</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PROGETTI -->
+        <section id="progetti" class="hidden">
+            <p class="section-eyebrow">Progetti</p>
+            <h2>Cosa ho costruito.</h2>
+            <div class="progetti-grid">
+
+                <!-- LIVE -->
+                <a href="https://mine-mpcm.onrender.com/" target="_blank" rel="noopener noreferrer" class="card">
+                    <p class="card-eyebrow">Blog · Live</p>
+                    <h3>Minecraft Guide <span class="arrow">↗</span></h3>
+                    <p>Blog per la community Minecraft. Guide, trucchi e risorse per giocatori italiani.</p>
+                    <div class="card-tags">
+                        <span class="tag">HTML</span>
+                        <span class="tag">CSS</span>
+                        <span class="tag">JS</span>
+                    </div>
+                </a>
+
+                <!-- IN ARRIVO -->
+                <div class="card coming-soon">
+                    <div class="card-badge">In sviluppo</div>
+                    <p class="card-eyebrow">Web Design</p>
+                    <h3>Gelateria B&amp;R</h3>
+                    <p>Sito web per attività locale. Design moderno, ottimizzato per mobile.</p>
+                    <div class="card-tags">
+                        <span class="tag">HTML</span>
+                        <span class="tag">CSS</span>
+                        <span class="tag">Responsive</span>
+                    </div>
+                </div>
+
+                <!-- IN ARRIVO -->
+                <div class="card coming-soon">
+                    <div class="card-badge">In sviluppo</div>
+                    <p class="card-eyebrow">App</p>
+                    <h3>Ricettario App</h3>
+                    <p>Applicazione per gestire ricette personali. Backend Python, interfaccia Java.</p>
+                    <div class="card-tags">
+                        <span class="tag">Python</span>
+                        <span class="tag">Java</span>
+                        <span class="tag">Mobile</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SKILLS -->
+        <section id="skills" class="hidden">
+            <p class="section-eyebrow">Competenze</p>
+            <h2>Cosa so fare.</h2>
+            <div class="skills-grid">
+                <div class="skill-item">
+                    <div class="skill-name">Frontend</div>
+                    <div class="skill-desc">HTML, CSS, JavaScript — costruisco interfacce responsive e curate nel dettaglio.</div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name">Backend</div>
+                    <div class="skill-desc">Java con Spring Boot e Python — logica server, API REST, struttura dei dati.</div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name">Sysadmin</div>
+                    <div class="skill-desc">Linux, web hosting, automazione. Gestione server e ambienti di sviluppo.</div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name">Soft Skills</div>
+                    <div class="skill-desc">Multilingue (IT, EN, RO, FR), team player, apprendimento rapido e continuo.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTATTI -->
+        <section id="contact" class="hidden">
+            <p class="section-eyebrow">Contatti</p>
+            <h2>Parliamo.</h2>
+            <p class="sub">Sono disponibile per posizioni junior, freelance o collaborazioni. Rispondо entro 24 ore.</p>
+            <div class="contact-links">
+                <a href="mailto:sandruvadiko@gmail.com" class="btn btn-primary">
+                    sandruvadiko@gmail.com
+                </a>
+                <a href="https://github.com/Vadiko03" target="_blank" rel="noopener noreferrer" class="btn btn-ghost">
+                    GitHub →
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>© 2025 Vadim Sandru</p>
+        <div class="footer-links">
+            <a href="mailto:sandruvadiko@gmail.com">Email</a>
+            <a href="https://github.com/Vadiko03" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+
+    <script>
+        // Scroll reveal
+        const obs = new IntersectionObserver(
+            entries => entries.forEach(e => {
+                if (e.isIntersecting) { e.target.classList.add('show'); obs.unobserve(e.target); }
+            }),
+            { threshold: 0.1 }
+        );
+        document.querySelectorAll('.hidden').forEach(el => obs.observe(el));
+
+        // Cursore custom
+        const cur = document.getElementById('cursor');
+        let cx = -100, cy = -100, tx = -100, ty = -100;
+
+        window.addEventListener('mousemove', e => { tx = e.clientX; ty = e.clientY; });
+
+        // Ingrandisce su link e card
+        document.querySelectorAll('a, .card, .btn').forEach(el => {
+            el.addEventListener('mouseenter', () => cur.classList.add('big'));
+            el.addEventListener('mouseleave', () => cur.classList.remove('big'));
+        });
+
+        function animateCursor() {
+            cx += (tx - cx) * 0.12;
+            cy += (ty - cy) * 0.12;
+            cur.style.left = cx + 'px';
+            cur.style.top  = cy + 'px';
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+    </script>
+
+</body>
+</html>
